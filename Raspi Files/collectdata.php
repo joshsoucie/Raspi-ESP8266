@@ -7,25 +7,25 @@
 
 # Set data for table and connect to db
   $lightState = $_GET['lightState'];
-  $conn = mysql_connect($servername, $username, $password);
+  $conn = mysqli_connect($servername, $username, $password);
 
 # Check connection and abort if not connected
   if(!$conn)
   {
-    die('Could not connect: ' . mysql_error());
+    die('Could not connect: ' . mysqli_error());
   }
 
 # Write some data to the db (DATE and lightState into the table, lightStatus)
   $datenow = date('Y-m-d');
-  $sql = sprintf("INSERT INTO lightStatus (logdate,lightState) VALUES ('%s',$lightState)", mysql_real_escape_string($datenow));
+  $sql = sprintf("INSERT INTO lightStatus (logdate,lightState) VALUES ('%s',$lightState)", mysqli_real_escape_string($conn, $datenow));
   echo "Light State is: ", $lightState, "\n";
   echo $sql, "\n";
-  $result = mysql_query($sql);
+  $result = mysqli_query($conn, $sql);
   if(!result) {
-    die('Invalid query: ' . mysql_error());
+    die('Invalid query: ' . mysqli_error());
   }
 
   # Let me know it posted the data & close db
   echo "<h1>The data has been sent!</h1>\n";
-  mysql_close($conn);
+  mysqli_close($conn);
 ?>
