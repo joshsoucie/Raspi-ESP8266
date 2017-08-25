@@ -17,7 +17,7 @@
 
 # Write some data to the db (DATE and lightState into the table, lightStatus)
   $datenow = date('Y-m-d');
-  $sql = sprintf("INSERT INTO lightStatus (logdate,lightState) VALUES ('%s',$lightState)", mysqli_real_escape_string($conn, $datenow));
+  $sql = sprintf("INSERT INTO lightStatus (logdate,lightState) VALUES ($datenow,$lightState)");
   echo "Light State is: ", $lightState, "\n";
   echo $sql, "\n";
   $result = mysqli_query($conn, $sql);
