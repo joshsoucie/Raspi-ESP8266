@@ -44,36 +44,19 @@ void updateDB() {
   Serial.println("Print to Host Complete");
   Serial.println("Closing Connection");
 
-  /*
-  if (!client.connect(server, 80)) {
-    Serial.println("Failed to Connect to ThingSpeak!");
-    return;
-  }
-
-  String url = "/update?key=";
-    url+=myWriteAPIKey;
-    url+="&field1=";
-    url+=String(lightState);
-    url+="\r\n";
-  
-  // Request to the server
-  client.print(String("GET ") + url + " HTTP/1.1\r\n" +
-               "Host: " + server + "\r\n" + 
-               "Connection: close\r\n\r\n");
-*/
 }
 
-TimedAction timedAction = TimedAction(5000, updateDB);
+TimedAction timedAction = TimedAction(500, updateDB);
 
 void setup() {
   Serial.begin(115200);
   delay(10);
-  
+
   // prepare GPIO2
   pinMode(LED_pin, OUTPUT);
   digitalWrite(LED_pin, lightState);
   pinMode(button_Pin, INPUT);
-  
+
   WiFi.begin(ssid, password);
 
   Serial.println();
@@ -87,13 +70,13 @@ void setup() {
   }
   Serial.println("");
   Serial.println("WiFi connected");
-  
+
 }
 
 void loop() {
 
   int reading = digitalRead(button_Pin);
-  
+
   if (reading != lastButtonState) {
     lastDebounceTime = millis();
     }
@@ -106,7 +89,7 @@ void loop() {
       lightState = !lightState;
     }
   }
-  
+
   digitalWrite(LED_pin, lightState);
   lastButtonState = reading;
 
@@ -114,6 +97,3 @@ void loop() {
 
   delay(10);
   }
-
-
-
